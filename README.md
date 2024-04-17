@@ -10,3 +10,6 @@ XR Interaction ToolKit (Mac 지원)
 
 # Unity Version
 2022.3.24f1 LTS
+
+
+![스크린샷 2023-10-11 110155](https://github.com/AnDongH/Project-V/assets/87707867/65d50cfc-9cab-4c16-84d3-c54fe4c47f3e)
