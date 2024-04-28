@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TestSceneUI : UI_Scene
+public class TestSceneUI : SceneUI
 {
     enum Buttons {
         TextButton
@@ -46,7 +46,7 @@ public class TestSceneUI : UI_Scene
     private void Test(PointerEventData data) {
         i++;
         GetText((int)Texts.Header_Text).text = i.ToString();
-        Access.UI.ShowPopupUI<UI_PopUp>("TestPopUpUI1");
+        Access.UI.ShowPopupUI<PopUpUI>("TestPopUpUI1");
     }
 
 }

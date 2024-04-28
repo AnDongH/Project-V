@@ -2,16 +2,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class UI_Manager : NormalSingleton<UI_Manager> {
+public class UIManager : NormalSingleton<UIManager> {
 
-    private int _order = 10;
+    // Canvas sorting order (only popup ui)
+    private int sortingOrder = 10;
 
-    private LinkedList<UI_PopUp> _popupStack = new LinkedList<UI_PopUp>();
-    
-    private UI_Scene _sceneUI = null;
+    // stack of popup ui
+    private LinkedList<PopUpUI> popupStack = new LinkedList<PopUpUI>();
 
+    // current UI objects at cur Scene
     private Dictionary<string, GameObject> curUIObjs = new Dictionary<string, GameObject>();
 
+    // current UI objects initalize
+    [Header("UI objs at cur Scene")]
     [SerializeField] private GameObject[] uiObjs;
 
     private void Start() {
@@ -22,40 +25,39 @@ public class UI_Manager : NormalSingleton<UI_Manager> {
 
 #if UNITY_EDITOR
     private void Update() {
-
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            ShowPopupUI<UI_PopUp>("TestPopUpUI1");
+            ShowPopupUI<PopUpUI>("TestPopUpUI1");
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            ShowPopupUI<UI_PopUp>("TestPopUpUI2");
+            ShowPopupUI<PopUpUI>("TestPopUpUI2");
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            ShowPopupUI<UI_PopUp>("TestPopUpUI3");
+            ShowPopupUI<PopUpUI>("TestPopUpUI3");
         if (Input.GetKeyDown(KeyCode.Alpha4))
-            ShowPopupUI<UI_PopUp>("TestPopUpUI4");
+            ShowPopupUI<PopUpUI>("TestPopUpUI4");
         if (Input.GetKeyDown(KeyCode.Alpha5))
-            ShowPopupUI<UI_PopUp>("TestPopUpUI5");
+            ShowPopupUI<PopUpUI>("TestPopUpUI5");
 
         if (Input.GetKeyDown(KeyCode.Escape))
             ClosePopupUI();
         if (Input.GetKeyDown(KeyCode.A))
             CloseAllPopupUI();
-
     }
 #endif
 
 
     /// <summary>
-    /// 캔버스(하나의 UI 묶음 단위) 생성, 초기화
+    /// Creation and initialization of a Canvas (a single UI functional unit).
     /// </summary>
     /// <param name="go"></param>
     /// <param name="sort"></param>
     public void SetCanvas(GameObject go, bool sort = true) {
+
         Canvas canvas = Utils.GetOrAddComponent<Canvas>(go);
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.overrideSorting = true;
+
         if (sort) {
-            canvas.sortingOrder = _order;
-            _order++;
+            canvas.sortingOrder = sortingOrder;
+            sortingOrder++;
         }
         else {
             canvas.sortingOrder = 0;
@@ -63,84 +65,79 @@ public class UI_Manager : NormalSingleton<UI_Manager> {
     }
 
     /// <summary>
-    /// 고정 UI 생성
+    /// Active True Scene UI
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <returns></returns>
-    public T ShowSceneUI<T>(string name = null) where T : UI_Scene {
-        if (string.IsNullOrEmpty(name))
-            name = typeof(T).Name;
+    public T ShowSceneUI<T>(string name = null) where T : SceneUI {
+        if (string.IsNullOrEmpty(name)) name = typeof(T).Name;
 
-        GameObject go;
-
-        go = UI_Instantiate(name);
-
+        GameObject go = UI_Instantiate(name);
         T SceneUI = Utils.GetOrAddComponent<T>(go);
-        _sceneUI = SceneUI;
 
         return SceneUI;
     }
 
     /// <summary>
-    /// 팝업 UI 생성
+    /// Active True PopUp UI
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <returns></returns>
-    public T ShowPopupUI<T>(string name = null) where T : UI_PopUp {
-        if (string.IsNullOrEmpty(name))
-            name = typeof(T).Name;
+    public T ShowPopupUI<T>(string name = null) where T : PopUpUI {
+        if (string.IsNullOrEmpty(name)) name = typeof(T).Name;
 
-        GameObject go;
-
-        go = UI_Instantiate(name);
-
+        GameObject go = UI_Instantiate(name);
         T popup = Utils.GetOrAddComponent<T>(go);
-        if (!_popupStack.Contains(popup)) _popupStack.AddLast(popup);
+
+        if (!popupStack.Contains(popup)) popupStack.AddLast(popup);
         else ClosePopupUI(popup);
 
         return popup;
     }
 
     /// <summary>
-    /// 팝업 UI 닫기 -> 닫으려는 것이 가장 마지막에 연건지 확인
+    /// Close the popup UI provided as an argument.
     /// </summary>
     /// <param name="popup"></param>
-    public void ClosePopupUI(UI_PopUp popup) {
-        if (_popupStack.Count == 0)
+    public void ClosePopupUI(PopUpUI popup) {
+        if (popupStack.Count == 0) {
+            Define.LogError("not exist popup UI");
             return;
+        }
 
-        _popupStack.Remove(popup);
         popup.gameObject.SetActive(false);
+        popupStack.Remove(popup);
 
-        _order = 10;
-
-        foreach (var p in _popupStack) {
-            Utils.GetOrAddComponent<Canvas>(p.gameObject).sortingOrder = _order;
-            _order++;
+        // re sort canvas ordering
+        sortingOrder = 10;
+        foreach (var p in popupStack) {
+            Utils.GetOrAddComponent<Canvas>(p.gameObject).sortingOrder = sortingOrder;
+            sortingOrder++;
         }
     }
 
     /// <summary>
-    /// 팝업 UI 닫기 -> 가장 마지막에 연 UI 닫기
+    /// Close the most recently opened popup UI.
     /// </summary>
     public void ClosePopupUI() {
-        if (_popupStack.Count == 0)
+        if (popupStack.Count == 0) {
+            Define.LogError("not exist popup UI");
             return;
+        }
 
-        UI_PopUp popup = _popupStack.Last.Value;
+        PopUpUI popup = popupStack.Last.Value;
         popup.gameObject.SetActive(false);
-        _popupStack.RemoveLast();
-        Debug.Log(1);
-        _order--;
+        popupStack.RemoveLast();
+        sortingOrder--;
     }
 
     /// <summary>
-    /// 모든 팝업 UI 닫기
+    /// Close all popup UI.
     /// </summary>
     public void CloseAllPopupUI() {
-        while (_popupStack.Count > 0)
+        while (popupStack.Count > 0)
             ClosePopupUI();
     }
 
@@ -150,7 +147,7 @@ public class UI_Manager : NormalSingleton<UI_Manager> {
     /// <param name="name"></param>
     /// <param name="parent"></param>
     /// <returns></returns>
-    private GameObject UI_Instantiate(string name, Transform parent = null) {
+    private GameObject UI_Instantiate(string name) {
         curUIObjs[name].SetActive(true);
         return curUIObjs[name];
     }

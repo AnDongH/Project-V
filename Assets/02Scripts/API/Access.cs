@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// You can use this class to reference objects that are configured as singletons.
+/// </summary>
 public static class Access {
 
     /// <summary>
     /// Global Player
     /// </summary>
-    public static PlayerController Player { get; private set; } = PlayerController.Instance;
+    public static PlayerController Player { get { return PlayerController.Instance; } }
     
     /// <summary>
     /// TalkManager
     /// </summary>
-    public static TalkManager Talk { get; private set; } = GameManager.Instance.GetComponent<TalkManager>();
+    public static TalkManager Talk { get { return GameManager.Instance.GetComponent<TalkManager>(); } }
 
     /// <summary>
     /// UIManager
     /// </summary>
-    public static UI_Manager UI { get; private set; } = UI_Manager.Instance;
+    public static UIManager UI { get { return UIManager.Instance; } }
 
 }

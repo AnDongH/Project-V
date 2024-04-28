@@ -8,11 +8,7 @@ public static class Extension {
         return Utils.GetOrAddComponent<T>(go);
     }
 
-    public static void BindEvent(this GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click) {
-        UI_Base.BindEvent(go, action, type);
-    }
-
-    public static void SetInteractable(this GameObject go, bool flag) {
-        UI_Base.SetInteractable(go, flag);
+    public static void BindEvent(this GameObject go, Action<PointerEventData> action, Define.UIEvent eventType = Define.UIEvent.Click) {
+        BaseUI.BindEvent(go, action, eventType);
     }
 }

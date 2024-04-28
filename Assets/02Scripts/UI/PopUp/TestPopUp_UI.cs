@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TestPopUp_UI : UI_PopUp
+public class TestPopUp_UI : PopUpUI
 {
     enum Buttons {
         TextButton

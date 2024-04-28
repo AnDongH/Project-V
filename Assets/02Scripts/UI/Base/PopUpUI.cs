@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEngine;
 
-public class UI_PopUp : UI_Base {
+
+/// <summary>
+/// PopUp UI Base
+/// If you want to create a popup UI canvas, you need to inherit from this class.
+/// </summary>
+public class PopUpUI : BaseUI {
     protected virtual void Init() {
         Access.UI.SetCanvas(gameObject, true);
     }

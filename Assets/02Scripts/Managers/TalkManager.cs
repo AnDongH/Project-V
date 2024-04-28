@@ -31,8 +31,6 @@ public class TalkManager : MonoBehaviour {
     private bool charEffecting;
     private int curCharIdx = 0;
     private Animator talkUIAnimator;
-    private Animator playerUIAnimator;
-    private Animator npcUIAnimator;
 
     // 대화중인지?
     public bool IsTalking { get; set; }
@@ -66,7 +64,6 @@ public class TalkManager : MonoBehaviour {
             return;
         }
 
-         
         IsTalking = true;
         nextText.SetActive(false);
         npcUI.gameObject.SetActive(false);
@@ -100,8 +97,6 @@ public class TalkManager : MonoBehaviour {
         selectBtnUI.SetActive(false);
         maxTalkIndex = curClient.Datas.Count;
         nextText.SetActive(true);
-        npcUI.gameObject.SetActive(client.N_DefaultImg != null);
-        npcUI.sprite = client.N_DefaultImg;
         talkUIAnimator.SetTrigger("On");
 
         NextTalk();
@@ -124,8 +119,6 @@ public class TalkManager : MonoBehaviour {
 
         nextText.SetActive(false);
 
-        npcUI.gameObject.SetActive(curClient.N_DefaultImg != null);
-        npcUI.sprite = curClient.N_DefaultImg;
         PanelTrigger.enabled = true;
 
         NextTalk();
@@ -176,24 +169,6 @@ public class TalkManager : MonoBehaviour {
         curCharIdx = 0;
         talkText.text = "";
         charEffecting = true;
-        
-        // side 판단해서 이미지 불러오기
-        if (curClient.Datas[curTalkIndex].side == "Player") {
-            playerUI.sprite = curClient.Datas[curTalkIndex].portrait;
-            playerUI.color = Color.white;
-
-            if (npcUI != null) npcUI.color = Color.gray;
-
-            playerUIAnimator.SetTrigger("Action");
-        }
-        else {
-            if (curClient.Datas[curTalkIndex].portrait != null) {
-                npcUI.sprite = curClient.Datas[curTalkIndex].portrait;
-                npcUI.color = Color.white;
-                npcUIAnimator.SetTrigger("Action");
-            }
-            playerUI.color = Color.gray;
-        }
 
         TypeEffectStart();
     }
@@ -202,13 +177,13 @@ public class TalkManager : MonoBehaviour {
     /// 대화 이펙트 시작
     /// </summary>
     private void TypeEffectStart() {
-        if (curCharIdx == curClient.Datas[curTalkIndex].talkText.Length) {
+        if (curCharIdx == curClient.Datas[curTalkIndex].TalkText.Length) {
             charEffecting = false;
             curTalkIndex++;
             return;
         }
 
-        talkText.text += curClient.Datas[curTalkIndex].talkText[curCharIdx++];
+        talkText.text += curClient.Datas[curTalkIndex].TalkText[curCharIdx++];
 
         Invoke("TypeEffectStart", 0.05f);
     }
@@ -218,8 +193,8 @@ public class TalkManager : MonoBehaviour {
     /// </summary>
     private void TypeEffectEnd() {
         CancelInvoke("TypeEffectStart");
-        curCharIdx = curClient.Datas[curTalkIndex].talkText.Length;
-        talkText.text = curClient.Datas[curTalkIndex].talkText;
+        curCharIdx = curClient.Datas[curTalkIndex].TalkText.Length;
+        talkText.text = curClient.Datas[curTalkIndex].TalkText;
         charEffecting = false;
         curTalkIndex++;
     }

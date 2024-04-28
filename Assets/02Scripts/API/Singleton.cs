@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
+// Base Singleton
 public class Singleton<T> : MonoBehaviour where T : Component {
     protected static T _instance;
 
@@ -26,6 +28,10 @@ public class Singleton<T> : MonoBehaviour where T : Component {
     }
 }
 
+/// <summary>
+/// This class provides a singleton pattern that is not destroyed even when switching scenes.
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class DontDestroySingleton<T> : Singleton<T> where T : Component {
 
     protected override void Awake() {
@@ -34,12 +40,15 @@ public class DontDestroySingleton<T> : Singleton<T> where T : Component {
             DontDestroyOnLoad(gameObject);
         }
         else {
-            _instance = this as T;
             Destroy(gameObject);
         }
     }
 }
 
+/// <summary>
+/// This class provides a singleton pattern
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class NormalSingleton<T> : Singleton<T> where T : Component {
 
     protected override void Awake() {

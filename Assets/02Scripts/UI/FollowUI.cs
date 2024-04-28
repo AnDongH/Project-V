@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class FollowUI : MonoBehaviour {
 
-    [SerializeField] private bool m_LookAtCamera = true;     
-    [SerializeField] private Transform m_UIElement;         
-    [SerializeField] private Transform m_Camera;            
-    [SerializeField] private bool m_RotateWithCamera;       
-    [SerializeField] private float m_FollowSpeed = 10f;     
-    [SerializeField] private float m_DistanceFromCamera; 
-
-
+    [SerializeField] private bool lookAtBaseObj = true;     
+    [SerializeField] private Transform followedUI;         
+    [SerializeField] private Transform baseObj;            
+    [SerializeField] private bool rotateWithBase;       
+    [SerializeField] private float followSpeed = 10f;     
+    [SerializeField] private float distanceFromBase; 
 
     private void Update() {
 
-        if (m_LookAtCamera)
-            m_UIElement.rotation = Quaternion.LookRotation(m_UIElement.position - m_Camera.position);
+        if (lookAtBaseObj) followedUI.rotation = Quaternion.LookRotation(followedUI.position - baseObj.position);
 
+        if (rotateWithBase) {
 
-        if (m_RotateWithCamera) {
+            Vector3 targetDirection = Vector3.ProjectOnPlane(baseObj.forward, Vector3.up).normalized;
+            Vector3 targetPosition = baseObj.position + targetDirection * distanceFromBase;
 
-            Vector3 targetDirection = Vector3.ProjectOnPlane(m_Camera.forward, Vector3.up).normalized;
-            Vector3 targetPosition = m_Camera.position + targetDirection * m_DistanceFromCamera;
+            targetPosition = Vector3.Lerp(followedUI.position, targetPosition, followSpeed * Time.deltaTime);
+            targetPosition.y = followedUI.position.y;
 
-            targetPosition = Vector3.Lerp(m_UIElement.position, targetPosition, m_FollowSpeed * Time.deltaTime);
-            targetPosition.y = m_UIElement.position.y;
-
-            m_UIElement.position = targetPosition;
+            followedUI.position = targetPosition;
         }
+
     }
+
 }

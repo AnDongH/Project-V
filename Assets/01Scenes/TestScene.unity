@@ -8993,40 +8993,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693479546}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6210baa5b4dcdc4284387dd45519f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <m_NormalClient>k__BackingField:
+  <NormalTalk>k__BackingField:
     <TalkName>k__BackingField: 
-    <P_DefaultImg>k__BackingField: {fileID: 0}
-    <N_DefaultImg>k__BackingField: {fileID: 0}
-    <Datas>k__BackingField:
-    - <side>k__BackingField: 
-      <portrait>k__BackingField: {fileID: 0}
-      <talkText>k__BackingField: 
-    - <side>k__BackingField: 
-      <portrait>k__BackingField: {fileID: 0}
-      <talkText>k__BackingField: 
-    - <side>k__BackingField: 
-      <portrait>k__BackingField: {fileID: 0}
-      <talkText>k__BackingField: 
-  <m_QuestGetClients>k__BackingField:
-  - <TalkName>k__BackingField: 
-    <P_DefaultImg>k__BackingField: {fileID: 0}
-    <N_DefaultImg>k__BackingField: {fileID: 0}
     <Datas>k__BackingField: []
-    <questID>k__BackingField: 0
-  <m_QuestProgressClients>k__BackingField:
-  - <TalkName>k__BackingField: 
-    <P_DefaultImg>k__BackingField: {fileID: 0}
-    <N_DefaultImg>k__BackingField: {fileID: 0}
-    <Datas>k__BackingField: []
-    <questID>k__BackingField: 0
-    <conditionID>k__BackingField: 0
-    <linkedID>k__BackingField: 0
-    <isQuest>k__BackingField: 0
+  <QuestGetTalks>k__BackingField: []
+  <QuestProgressTalks>k__BackingField: []
 --- !u!114 &1693479550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10068,7 +10044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8922374910143308772, guid: 9a1e7f6c23881b24a9062a02a194a88a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10282,10 +10258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f518d84db31d4654381aa29982d9c59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <P_DInfo>k__BackingField:
-    <Collider>k__BackingField: {fileID: 0}
-    <Rigidbody>k__BackingField: {fileID: 0}
-    <BoneAnimator>k__BackingField: {fileID: 0}
   <P_SInfo>k__BackingField: {fileID: 0}
 --- !u!1001 &2091421611
 PrefabInstance:

@@ -5,23 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Utils {
+public static class Utils {
 
     /// <summary>
-    /// go의 자식 오브젝트 중에서 이름이 name인 것 중에서 T컴포넌트 가져오기
-    /// recursive가 true 일 시 모든 자식을 다 훑어보고
-    /// false일 시 가장 첫 자식만 본다.
+    /// Retrieve the component of type T from the child objects of GameObject that have the name 'name'.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="go"></param>
     /// <param name="name"></param>
-    /// <param name="recursive"></param>
+    /// <param name="deepSearch"></param>
     /// <returns></returns>
-    public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : Object {
+    public static T FindChild<T>(GameObject go, string name = null, bool deepSearch = false) where T : Object {
         if (go == null)
             return null;
 
-        if (recursive == false) {
+        if (deepSearch == false) {
             for (int i = 0; i < go.transform.childCount; i++) {
                 Transform transform = go.transform.GetChild(i);
                 if (string.IsNullOrEmpty(name) || transform.name == name) {
@@ -42,8 +40,20 @@ public class Utils {
     }
 
     /// <summary>
-    /// go에서 T 컴포넌트 가져오기
-    /// 만약 없다면 붙여서라도 가져오기
+    /// Retrieve the GameObject from the child objects of cur GameObject that have the name 'name'.
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="name"></param>
+    /// <param name="deepSearch"></param>
+    /// <returns></returns>
+    public static GameObject FindChild(GameObject go, string name = null, bool deepSearch = false) {
+        Transform transform = FindChild<Transform>(go, name, deepSearch);
+        if (transform == null) return null;
+        return transform.gameObject;
+    }
+
+    /// <summary>
+    /// Retrieves the component of type <T>. If it doesn't exist, a new one is added and then returned.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="go"></param>
@@ -53,21 +63,5 @@ public class Utils {
         if (component == null) component = go.AddComponent<T>();
         return component;
     }
-
-    /// <summary>
-    /// go의 자식 오브젝트 중에서 이름이 name인 것 중에서 게임 오브젝트 가져오기
-    /// recursive가 true 일 시 모든 자식을 다 훑어보고
-    /// false일 시 가장 첫 자식만 본다.
-    /// </summary>
-    /// <param name="go"></param>
-    /// <param name="name"></param>
-    /// <param name="recursive"></param>
-    /// <returns></returns>
-    public static GameObject FindChild(GameObject go, string name = null, bool recursive = false) {
-        Transform transform = FindChild<Transform>(go, name, recursive);
-        if (transform == null) return null;
-        return transform.gameObject;
-    }
-
 
 }

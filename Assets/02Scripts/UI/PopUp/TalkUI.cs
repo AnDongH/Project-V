@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class TestTalkUI : UI_PopUp
+public class TalkUI : PopUpUI
 {
     enum Objects {
         TestTalkUI
@@ -18,15 +18,14 @@ public class TestTalkUI : UI_PopUp
 
         Bind<GameObject>(typeof(Objects));
 
-        GetButton((int)Objects.TestTalkUI).gameObject.BindEvent(OnExitBtnClicked);
+        GetButton((int)Objects.TestTalkUI).gameObject.BindEvent(OnPanelClicked);
     }
 
     private void OnEnable() {
         Init();
     }
 
-
-    private void OnExitBtnClicked(PointerEventData data) {
+    private void OnPanelClicked(PointerEventData data) {
         Access.Talk.NextTalk();
     }
 }
