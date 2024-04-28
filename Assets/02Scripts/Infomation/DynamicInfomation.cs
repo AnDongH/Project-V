@@ -1,4 +1,6 @@
-public abstract class DynamicInfomation
+using UnityEngine;
+
+public abstract class DynamicInfomation : ScriptableObject
 {
     
 }
