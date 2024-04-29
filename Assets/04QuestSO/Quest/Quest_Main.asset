@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031f197ddd4405148b247cf8dcb867d9, type: 3}
+  m_Name: Quest_Main
+  m_EditorClassIdentifier: 
+  category: {fileID: 11400000, guid: cb41e3ee86109484e8715fc0abc80b13, type: 2}
+  icon: {fileID: 0}
+  id: QUEST_MAIN
+  displayName: main
+  description: this is main quest
+  taskGroups:
+  - tasks:
+    - {fileID: 11400000, guid: 257c9bcc429ca55489ba27dd14bb4982, type: 2}
+    - {fileID: 11400000, guid: b71b3d2df97157d47bc182bdf595aae3, type: 2}
+    - {fileID: 11400000, guid: 4da8b588c84930542bef0f807ce31130, type: 2}
+  rewards: []
+  useAutoComplete: 1
+  isCancelable: 0
+  acceptionConditions: []
+  cancelConditions: []

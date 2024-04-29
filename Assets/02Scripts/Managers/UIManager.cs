@@ -17,7 +17,8 @@ public class UIManager : NormalSingleton<UIManager> {
     [Header("UI objs at cur Scene")]
     [SerializeField] private GameObject[] uiObjs;
 
-    private void Start() {
+    protected override void Awake() {
+        base.Awake();
         foreach (var obj in uiObjs) {
             curUIObjs.Add(obj.name, obj.gameObject);
         }
@@ -36,10 +37,19 @@ public class UIManager : NormalSingleton<UIManager> {
         if (Input.GetKeyDown(KeyCode.Alpha5))
             ShowPopupUI<PopUpUI>("TestPopUpUI5");
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             ClosePopupUI();
+            curUIObjs["Quest View"].SetActive(false);
+            curUIObjs["Achievement View"].SetActive(false);
+        }
         if (Input.GetKeyDown(KeyCode.A))
             CloseAllPopupUI();
+
+        if (Input.GetKeyDown(KeyCode.RightControl))
+            curUIObjs["Quest View"].SetActive(true);
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+            curUIObjs["Achievement View"].SetActive(true);
     }
 #endif
 
@@ -103,7 +113,7 @@ public class UIManager : NormalSingleton<UIManager> {
     /// <param name="popup"></param>
     public void ClosePopupUI(PopUpUI popup) {
         if (popupStack.Count == 0) {
-            Define.LogError("not exist popup UI");
+            Define.LogError("not exist popup UIM");
             return;
         }
 
@@ -123,7 +133,7 @@ public class UIManager : NormalSingleton<UIManager> {
     /// </summary>
     public void ClosePopupUI() {
         if (popupStack.Count == 0) {
-            Define.LogError("not exist popup UI");
+            Define.LogError("not exist popup UIM");
             return;
         }
 

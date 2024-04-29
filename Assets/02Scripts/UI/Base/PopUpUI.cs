@@ -6,10 +6,10 @@
 /// </summary>
 public class PopUpUI : BaseUI {
     protected virtual void Init() {
-        Access.UI.SetCanvas(gameObject, true);
+        Access.UIM.SetCanvas(gameObject, true);
     }
     protected virtual void ClosePopUpUI() {
-        Access.UI.ClosePopupUI(this);
+        Access.UIM.ClosePopupUI(this);
     }
 
 }

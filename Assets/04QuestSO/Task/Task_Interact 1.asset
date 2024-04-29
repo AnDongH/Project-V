@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a96296997c1ef24382dad8f55fe0e3e, type: 3}
+  m_Name: Task_Interact 1
+  m_EditorClassIdentifier: 
+  category: {fileID: 11400000, guid: 6f3c5a99cfcad2f49bf6da10f6b7f14f, type: 2}
+  id: TASK_INTERACT
+  description: "poke \uBC84\uD2BC\uC911 \uC911\uAC04 \uAC83\uC744 \uB204\uB974\uC790"
+  handler: {fileID: 11400000, guid: 1037681cd3c12974ba05285fcc5dd8d9, type: 2}
+  targets:
+  - {fileID: 11400000, guid: b62e0662a99063748bdee1329e8be787, type: 2}
+  initialConditionValue: {fileID: 0}
+  neededConditionToComplete: 1
+  canReceiveReportsDuringCompletion: 0

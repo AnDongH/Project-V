@@ -46,7 +46,7 @@ public class TestSceneUI : SceneUI
     private void Test(PointerEventData data) {
         i++;
         GetText((int)Texts.Header_Text).text = i.ToString();
-        Access.UI.ShowPopupUI<PopUpUI>("TestPopUpUI1");
+        Access.UIM.ShowPopupUI<PopUpUI>("TestPopUpUI1");
     }
 
 }

@@ -6,14 +6,14 @@ using TMPro;
 using UnityEditor.PackageManager;
 using UnityEngine.EventSystems;
 
-public class TalkManager : MonoBehaviour {
+public class TalkManager : DontDestroySingleton<TalkManager> {
 
-    [Header("대화 UI")]
+    [Header("대화 UIM")]
     [SerializeField] private GameObject talkPanel;
     [SerializeField] private GameObject selectBtnPrefab;
 
     [field: SerializeField, Header("퀘스트 데이타베이스")]
-    public QuestData QuestDataBase { get; private set; }
+    public OldQuestData QuestDataBase { get; private set; }
 
     // UI
     private TextMeshProUGUI talkText;
@@ -36,8 +36,9 @@ public class TalkManager : MonoBehaviour {
     public bool IsTalking { get; set; }
 
 
-    protected void Awake() {
+    protected override void Awake() {
 
+        base.Awake();
         // UI 초기화
      // talkText = talkPanel.transform.Find("TalkText").gameObject.GetComponent<TextMeshProUGUI>();
      // nextText = talkPanel.transform.Find("NextText").gameObject;
@@ -203,7 +204,7 @@ public class TalkManager : MonoBehaviour {
     /// 퀘스트 제공
     /// </summary>
     /// <param name="questID"></param>
-    public void QuestProvide(Quest quest) {
+    public void QuestProvide(OldQuest quest) {
 
        if (quest == null) {
            Debug.Log("퀘스트가 존재하지 않습니다.");
@@ -217,7 +218,7 @@ public class TalkManager : MonoBehaviour {
        else {
             Debug.Log("이미 할당된 퀘스트");
 
-            foreach (Quest.QuestID q in Access.Player.P_DInfo.ClearQuestsID)
+            foreach (OldQuest.QuestID q in Access.Player.P_DInfo.ClearQuestsID)
                 Debug.Log(q);
             Debug.Log(quest.questID);
 
@@ -225,7 +226,7 @@ public class TalkManager : MonoBehaviour {
        }
     }
 
-    public void SelectBtnSet(Quest quest) {
+    public void SelectBtnSet(OldQuest quest) {
 
         selectBtnUI.SetActive(true);
         npcUI.gameObject.SetActive(false);
@@ -243,7 +244,7 @@ public class TalkManager : MonoBehaviour {
         talkText.text = "퀘스트를 받으시겠습니까?";
     }
 
-    private void YesOrNo(bool flag, Quest quest = null) {
+    private void YesOrNo(bool flag, OldQuest quest = null) {
         if (flag) QuestProvide(quest);
         foreach (GameObject g in btnList) Destroy(g);
         btnList.Clear();
@@ -256,9 +257,9 @@ public class TalkManager : MonoBehaviour {
     /// </summary>
     /// <param name="conditionID"></param>
     /// <param name="questID"></param>
-    public void UpdateCondition(Condition.ConditionID conditionID, Quest.QuestID questID) {
+    public void UpdateCondition(OldCondition.ConditionID conditionID, OldQuest.QuestID questID) {
 
-       Quest quest;
+       OldQuest quest;
 
        quest = Access.Player.P_DInfo.CurQuest;
 
@@ -278,9 +279,9 @@ public class TalkManager : MonoBehaviour {
     /// <summary>
     /// 퀘스트 클리어 체크
     /// </summary>
-    public void ClearCheck(Quest.QuestID questID) {
+    public void ClearCheck(OldQuest.QuestID questID) {
 
-       Quest quest;
+       OldQuest quest;
 
        quest = Access.Player.P_DInfo.CurQuest;
 
@@ -302,7 +303,7 @@ public class TalkManager : MonoBehaviour {
     /// 퀘스트 클리어
     /// </summary>
     /// <param name="questID"></param>
-    public void QuestClear(Quest.QuestID questID) {
+    public void QuestClear(OldQuest.QuestID questID) {
         Access.Player.P_DInfo.CurQuest = null;
         Access.Player.P_DInfo.ClearQuestsID.Add(questID);
     }

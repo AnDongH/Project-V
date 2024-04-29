@@ -15,11 +15,15 @@ public static class Access {
     /// <summary>
     /// TalkManager
     /// </summary>
-    public static TalkManager Talk { get { return GameManager.Instance.GetComponent<TalkManager>(); } }
+    public static TalkManager TalkM { get { return TalkManager.Instance; } }
 
     /// <summary>
     /// UIManager
     /// </summary>
-    public static UIManager UI { get { return UIManager.Instance; } }
+    public static UIManager UIM { get { return UIManager.Instance; } }
 
+    /// <summary>
+    /// QuestManager
+    /// </summary>
+    public static QuestManager QuestM { get { return QuestManager.Instance; } }
 }
