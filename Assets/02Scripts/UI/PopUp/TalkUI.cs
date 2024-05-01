@@ -25,6 +25,6 @@ public class TalkUI : PopUpUI
     }
 
     private void OnPanelClicked(PointerEventData data) {
-        Access.TalkM.NextTalk();
+        
     }
 }

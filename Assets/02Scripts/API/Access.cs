@@ -11,11 +11,6 @@ public static class Access {
     /// Global Player
     /// </summary>
     public static PlayerController Player { get { return PlayerController.Instance; } }
-    
-    /// <summary>
-    /// TalkManager
-    /// </summary>
-    public static TalkManager TalkM { get { return TalkManager.Instance; } }
 
     /// <summary>
     /// UIManager
