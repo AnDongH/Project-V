@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class BaseUI : MonoBehaviour {
     
@@ -72,8 +73,10 @@ public class BaseUI : MonoBehaviour {
     protected GameObject GetObject(int idx) { return Get<GameObject>(idx); }
     protected InputField GetInputField(int idx) { return Get<InputField>(idx); }
     protected Text GetText(int idx) { return Get<Text>(idx); }
+    protected TextMeshProUGUI GetTMP(int idx) { return Get<TextMeshProUGUI>(idx); }
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected Dropdown GetDropdown(int idx) { return Get<Dropdown>(idx); }
     protected Toggle GetToggle(int idx) { return Get<Toggle>(idx); }
+    protected RectTransform GetRect(int idx) { return Get<RectTransform>(idx); }
 }

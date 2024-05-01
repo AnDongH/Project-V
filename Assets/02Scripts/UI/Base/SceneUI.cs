@@ -5,6 +5,6 @@
 /// </summary>
 public class SceneUI : BaseUI {
     protected virtual void Init() {
-        Access.UI.SetCanvas(gameObject, false);
+        Access.UIM.SetCanvas(gameObject, false);
     }
 }

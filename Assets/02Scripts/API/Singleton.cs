@@ -6,14 +6,15 @@ using UnityEngine;
 // Base Singleton
 public class Singleton<T> : MonoBehaviour where T : Component {
     protected static T _instance;
+    private static bool isApplicationQuitting;
 
     public static T Instance {
         get {
-            if (_instance == null) {
+            if (!isApplicationQuitting && _instance == null) {
                 _instance = FindObjectOfType<T>();
 
                 if (_instance == null) {
-                    GameObject obj = new GameObject();
+                    GameObject obj = new();
                     obj.name = typeof(T).Name;
                     _instance = obj.AddComponent<T>();
                 }
@@ -25,6 +26,10 @@ public class Singleton<T> : MonoBehaviour where T : Component {
 
     protected virtual void Awake() {
 
+    }
+
+    protected void OnApplicationQuit() {
+        isApplicationQuitting = true;
     }
 }
 
