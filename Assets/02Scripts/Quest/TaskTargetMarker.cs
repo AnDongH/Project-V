@@ -71,6 +71,7 @@ public class TaskTargetMarker : MonoBehaviour
 
     private void RemoveTargetQuest(Quest quest) => targetTasksByQuest.Remove(quest);
 
+    // expected bug
     private void UpdateRunningTargetTaskCount(Task task, TaskState currentState, TaskState prevState = TaskState.Inactive)
     {
         if (currentState == TaskState.Running)
