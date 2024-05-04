@@ -1,4 +1,5 @@
 using Dialogue;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,12 @@ public class DialoguePanelUI : PopUpUI
 
     [SerializeField] private SelectBtn btn;
     [SerializeField] private Transform p;
+    [SerializeField] private float typingSpeed;
 
+    private WaitForSeconds typingSpeed_CO;
+    private Coroutine typeCO;
+    private bool isTyping;
+    private string targetText;
     private List<SelectBtn> btns = new List<SelectBtn>();
 
     protected override void Init() {
@@ -30,6 +36,8 @@ public class DialoguePanelUI : PopUpUI
         Access.DIalogueM.OnDialogueNexted += OnNexted;
         Access.DIalogueM.OnDialogueCompleted += OnCompleted;
 
+        typingSpeed_CO = new WaitForSeconds(typingSpeed);
+
         gameObject.SetActive(false);
     }
 
@@ -45,7 +53,8 @@ public class DialoguePanelUI : PopUpUI
     }
 
     private void NextDialogue(PointerEventData data) {
-        DialogueManager.Instance.NextDialogue();
+        if (!isTyping) DialogueManager.Instance.NextDialogue();
+        else EndTypeText();
     }
 
     private void OnRegistered(DialogueGraph dialogue) {
@@ -56,7 +65,7 @@ public class DialoguePanelUI : PopUpUI
         btns.Clear();
 
         Access.UIM.ShowPopupUI<PopUpUI>(name);
-        GetTMP((int)TMPs.TalkText).text = dialogue.currentNode.text;
+        typeCO = StartCoroutine(TypeText(dialogue.currentNode.text));
         GetTMP((int)TMPs.TalkerText).text = dialogue.currentNode.character.TalkerName;
         GetTMP((int)TMPs.TalkText).color = dialogue.currentNode.character.TextColor;
 
@@ -79,7 +88,7 @@ public class DialoguePanelUI : PopUpUI
         btns.Clear();
 
         Access.UIM.ShowPopupUI<PopUpUI>(name);
-        GetTMP((int)TMPs.TalkText).text = "무엇을 물어볼까?";
+        typeCO = StartCoroutine(TypeText("무엇을 물어볼까?"));
         GetTMP((int)TMPs.TalkerText).text = "나";
         GetTMP((int)TMPs.TalkText).color = Color.white;
 
@@ -101,7 +110,7 @@ public class DialoguePanelUI : PopUpUI
         }
         btns.Clear();
 
-        GetTMP((int)TMPs.TalkText).text = dialogue.currentNode.text;
+        typeCO = StartCoroutine(TypeText(dialogue.currentNode.text));
         GetTMP((int)TMPs.TalkerText).text = dialogue.currentNode.character.TalkerName;
         GetTMP((int)TMPs.TalkText).color = dialogue.currentNode.character.TextColor;
 
@@ -124,5 +133,26 @@ public class DialoguePanelUI : PopUpUI
         ClosePopUpUI();
     }
 
-    
+    private IEnumerator TypeText(string target) {
+
+        GetTMP((int)TMPs.TalkText).text = "";
+        int idx = 0;
+        isTyping = true;
+        targetText = target;
+
+        while (GetTMP((int)TMPs.TalkText).text.Length < target.Length) {
+            GetTMP((int)TMPs.TalkText).text += target[idx++];
+            yield return typingSpeed_CO;
+        }
+
+        isTyping = false;
+
+    }
+
+    private void EndTypeText() {
+        if (typeCO != null) StopCoroutine(typeCO);
+        GetTMP((int)TMPs.TalkText).text = targetText;
+        isTyping = false;
+        typeCO = null;
+    }
 }
