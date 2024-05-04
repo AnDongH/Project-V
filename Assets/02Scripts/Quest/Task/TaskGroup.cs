@@ -78,6 +78,13 @@ public class TaskGroup
         }
     }
 
+    public bool IsTarget(string category, object target) {
+        foreach (var task in tasks) {
+            return task.IsTarget(category, target);
+        }
+        return false;
+    }
+
     /// <summary>
     /// Check all tasks completed 
     /// </summary>

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4358578150356825541}
   - component: {fileID: 2163957420632415780}
   - component: {fileID: 222803853075876151}
-  - component: {fileID: 2618231641671226846}
+  - component: {fileID: 6877407786180203892}
+  - component: {fileID: 7114910316764229479}
   m_Layer: 0
   m_Name: Luna
   m_TagString: Untagged
@@ -108,9 +109,9 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2618231641671226846}
-        m_TargetAssemblyTypeName: QuestGiver, Assembly-CSharp
-        m_MethodName: GiveQuest
+      - m_Target: {fileID: 7114910316764229479}
+        m_TargetAssemblyTypeName: DialogueProvider, Assembly-CSharp
+        m_MethodName: Provide
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2618231641671226846
+--- !u!114 &6877407786180203892
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,11 +181,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3855948662225289030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcb0ce3541845f346ac2a6eaf8a63810, type: 3}
+  m_Script: {fileID: 11500000, guid: 60f9b75e13100d244ac96f719a741f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quests:
-  - {fileID: 11400000, guid: f50c9f9976f0cab4b92fdb18e8245a14, type: 2}
+  quests: []
+--- !u!114 &7114910316764229479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3855948662225289030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad0e8014747d724797c8b17ed67d14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000, guid: 98e20a589cc8a504a8fe5e77f2c620af, type: 2}
 --- !u!1001 &8066913008448307546
 PrefabInstance:
   m_ObjectHideFlags: 0

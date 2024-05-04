@@ -24,36 +24,6 @@ public class UIManager : NormalSingleton<UIManager> {
         }
     }
 
-#if UNITY_EDITOR
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            ShowPopupUI<PopUpUI>("TestPopUpUI1");
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            ShowPopupUI<PopUpUI>("TestPopUpUI2");
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            ShowPopupUI<PopUpUI>("TestPopUpUI3");
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            ShowPopupUI<PopUpUI>("TestPopUpUI4");
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            ShowPopupUI<PopUpUI>("TestPopUpUI5");
-
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            ClosePopupUI();
-            curUIObjs["Quest View"].SetActive(false);
-            curUIObjs["Achievement View"].SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-            CloseAllPopupUI();
-
-        if (Input.GetKeyDown(KeyCode.RightControl))
-            curUIObjs["Quest View"].SetActive(true);
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-            curUIObjs["Achievement View"].SetActive(true);
-    }
-#endif
-
-
     /// <summary>
     /// Creation and initialization of a Canvas (a single UI functional unit).
     /// </summary>
@@ -102,7 +72,6 @@ public class UIManager : NormalSingleton<UIManager> {
         T popup = Utils.GetOrAddComponent<T>(go);
 
         if (!popupStack.Contains(popup)) popupStack.AddLast(popup);
-        else ClosePopupUI(popup);
 
         return popup;
     }

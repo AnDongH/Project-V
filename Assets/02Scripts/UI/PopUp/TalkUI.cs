@@ -15,13 +15,9 @@ public class TalkUI : PopUpUI
     }
 
     private void Start() {
-
+        Init();
         Bind<GameObject>(typeof(Objects));
         GetButton((int)Objects.TestTalkUI).gameObject.BindEvent(OnPanelClicked);
-    }
-
-    private void OnEnable() {
-        Init();
     }
 
     private void OnPanelClicked(PointerEventData data) {

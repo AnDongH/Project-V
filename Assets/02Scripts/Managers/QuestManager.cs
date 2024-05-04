@@ -97,8 +97,7 @@ public class QuestManager : DontDestroySingleton<QuestManager>
     /// <param name="category"></param>
     /// <param name="target"></param>
     /// <param name="conditionCount"></param>
-    public void ReceiveReport(Category category, TaskTarget target, int conditionCount)
-        => ReceiveReport(category.ID, target.Value, conditionCount);
+    public void ReceiveReport(Category category, TaskTarget target, int conditionCount) => ReceiveReport(category.ID, target.Value, conditionCount);
 
     /// <summary>
     /// Overloading of `ReceiveReport(string category, object target, int conditionCount)`.
@@ -115,6 +114,19 @@ public class QuestManager : DontDestroySingleton<QuestManager>
         // so use a copy of the list for iteration.
         foreach (var quest in quests.ToArray())
             quest.ReceiveReport(category, target, conditionCount);
+    }
+
+    public bool IsTarget(string category, object target) {
+        return IsTarget(activeQuests, category, target);
+    }
+
+    public bool IsTarget(Category category, TaskTarget target) => IsTarget(category.ID, target.Value);
+
+    private bool IsTarget(List<Quest> quests, string category, object target) {
+        foreach (var quest in quests.ToArray()) {
+            return quest.IsTarget(category, target);
+        }
+        return false;
     }
 
     /// <summary>

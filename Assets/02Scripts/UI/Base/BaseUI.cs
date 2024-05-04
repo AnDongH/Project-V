@@ -66,7 +66,20 @@ public class BaseUI : MonoBehaviour {
                 evt.OnClickHandler -= action;
                 evt.OnClickHandler += action;
                 break;
+            case Define.UIEvent.Enter:
+                evt.OnEnterHandler -= action;
+                evt.OnEnterHandler += action;
+                break;
+            case Define.UIEvent.Exit:
+                evt.OnExitHandler -= action;
+                evt.OnExitHandler += action;
+                break;
         }
+    }
+
+    public static void SetInteractable(GameObject go, bool flag) {
+        UI_EventHandler evt = Utils.GetOrAddComponent<UI_EventHandler>(go);
+        evt.interactable = flag;
     }
 
     // Get UI component by Get method

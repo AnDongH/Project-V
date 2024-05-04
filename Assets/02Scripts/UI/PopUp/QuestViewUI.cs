@@ -32,6 +32,8 @@ public class QuestViewUI : PopUpUI
 
         foreach (var tab in questListViewController.Tabs)
             tab.onValueChanged.AddListener(HideDetail);
+
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()

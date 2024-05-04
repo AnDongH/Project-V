@@ -78,7 +78,7 @@ public class Task : ScriptableObject
         {
             var prevState = state;
             state = value;
-            OnStateChanged?.Invoke(this, state, prevState);
+            if (state != prevState) OnStateChanged?.Invoke(this, state, prevState);
         }
     }
     public bool IsComplete => State == TaskState.Complete;

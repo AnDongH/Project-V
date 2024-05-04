@@ -9,7 +9,8 @@ public static class Define {
     // Basic UI Event
     public enum UIEvent {
         Click,
-        Drag,
+        Enter,
+        Exit
     }
     #endregion
 

@@ -18,6 +18,8 @@ public class AchievementViewUI : PopUpUI
         var questSystem = Access.QuestM;
         CreateDetailViews(questSystem.ActiveAchievements);
         CreateDetailViews(questSystem.CompletedAchievements);
+
+        gameObject.SetActive(false);
     }
 
     private void CreateDetailViews(IReadOnlyList<Quest> achievements)

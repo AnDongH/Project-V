@@ -40,8 +40,8 @@ public class Quest : ScriptableObject
     [SerializeField] private bool isCancelable;
 
     [Header("Condition")]
-    [SerializeField] private AcceptionCondition[] acceptionConditions;
-    [SerializeField] private AcceptionCondition[] cancelConditions;
+    [SerializeField] private QuestAcceptionCondition[] acceptionConditions;
+    [SerializeField] private QuestAcceptionCondition[] cancelConditions;
 
     private int currentTaskGroupIndex;
 
@@ -122,6 +122,16 @@ public class Quest : ScriptableObject
         }
         else
             State = QuestState.Running;
+    }
+
+    public bool IsTarget(string category, object target) {
+        // Error Report
+        Debug.Assert(IsRegistered, "This quest has already been registered.");
+        Debug.Assert(!IsCancel, "This quest has been canceled.");
+
+        if (IsComplete) return false;
+
+        return CurrentTaskGroup.IsTarget(category, target);
     }
 
     /// <summary>
